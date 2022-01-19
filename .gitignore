@@ -1,2 +1,8 @@
 target
 .DS_Store
+.classpath
+.idea/
+.project
+.settings/
+PiDigits.iml
+bin/
