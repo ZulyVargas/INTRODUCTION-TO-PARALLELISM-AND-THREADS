@@ -3,11 +3,10 @@
 ### Arquitecturas de Software - ARSW
 ## Ejercicio Introducción al paralelismo - Hilos - Caso BlackListSearch
 
+## Desarrollado por :
+   Camilo Andrés Pichimata Cárdenas
 
-### Dependencias:
-####   Lecturas:
-*  [Threads in Java](http://beginnersbook.com/2013/03/java-threads/)  (Hasta 'Ending Threads')
-*  [Threads vs Processes]( http://cs-fundamentals.com/tech-interview/java/differences-between-thread-and-process-in-java.php)
+   Zuly Valentina Vargas Ramírez 	
 
 ### Descripción
   Este ejercicio contiene una introducción a la programación con hilos en Java, además de la aplicación a un caso concreto.
@@ -16,11 +15,45 @@
 **Parte I - Introducción a Hilos en Java**
 
 1. De acuerdo con lo revisado en las lecturas, complete las clases CountThread, para que las mismas definan el ciclo de vida de un hilo que imprima por pantalla los números entre A y B.
+
+	Para este punto se completo la clase CountThread agregando dos atributos : numero1 y numero2, los cuales permiten definir los límites para la impresión por pantalla de los números. Se completó el constructor con los parametros enteros A y B los cuales son asignados a los atributos definidos.
+	Para imprimir los números en pantalla se construyó el método run() en el cual mediante un iterador y los atributos definidos muestra los números en el rango correspondiente.
+
+	![](img/count_thread.png)
+
+	
+
+	
+	
+
 2. Complete el método __main__ de la clase CountMainThreads para que:
 	1. Cree 3 hilos de tipo CountThread, asignándole al primero el intervalo [0..99], al segundo [99..199], y al tercero [200..299].
 	2. Inicie los tres hilos con 'start()'.
 	3. Ejecute y revise la salida por pantalla. 
 	4. Cambie el incio con 'start()' por 'run()'. Cómo cambia la salida?, por qué?.
+
+Para compilar y ejecutar se emplea :
+	
+	maven package
+
+	mvn exec:java -Dexec.mainClass="edu.eci.arsw.threads.CountThreadsMain"
+
+
+**Método main():**
+
+	2. start():
+
+
+![](img/start.png)
+	
+
+	4. run():
+
+![](img/run.png)
+
+
+Al ejecutar el método run() en lugar de start() se ejecutan las iteraciones en orden. COmo se puede observar se muestran primero los números del rango para el primer hilo, luego los del segundo y por último los números en el rango del tercer hilo. Esto sucede ya que al ejecutar run() para cada hilo, estos se ejecutan uno tras o otro secuencialmente, mientras que al usar a start()  este llama al método run() el cual no se ejecuta en un orden en especifico sino que se ejecuta en hilos separados. 
+
 
 **Parte II - Ejercicio Black List Search**
 
