@@ -28,6 +28,5 @@ public class CountThreadsMain {
     	hilo2.run();
     	hilo3.run();
     	
-    }
-    
+    } 
 }
