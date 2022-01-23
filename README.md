@@ -93,6 +93,17 @@ Para 'refactorizar' este código, y hacer que explote la capacidad multi-núcleo
 
 	* Se sabe que el HOST 202.24.34.55 está reportado en listas negras de una forma más dispersa, y que el host 212.24.24.55 NO está en ninguna lista negra.
 
+	
+	Después de la implementación de busqueda mediante el uso de hilos y las pruebas correspondientes obtuvimos los siguientes resultados:
+	 
+	- **Con la IP:  202.24.34.55 y 10 Hilos**
+
+	![](img/prueba_1.png)
+
+	- **Con la IP: 212.24.24.55 y 12 Hilos**
+
+	![](img/prueba_2.png)
+
 
 **Parte II.I Para discutir la próxima clase (NO para implementar aún)**
 
