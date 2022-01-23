@@ -20,16 +20,14 @@ public class BlackListValidator extends Thread {
 	private int checkedListsCount;
 	
 	
-	public BlackListValidator (int initial_server, int final_server, int ocurrencesCount, String ipaddress, HostBlacklistsDataSourceFacade skds, 
-			LinkedList<Integer> blackListOcurrences, int checkedListsCount){
+	public BlackListValidator (int initial_server, int final_server, String ipaddress, HostBlacklistsDataSourceFacade skds){
 		this.initial_server = initial_server;
 		this.final_server = final_server;
-		this.ocurrencesCount = ocurrencesCount ;
+		this.ocurrencesCount = 0 ;
 		this.ipaddress = ipaddress;
 		this.skds = skds;
-		this.blackListOcurrences = blackListOcurrences;
-		this.checkedListsCount = checkedListsCount; 
-		
+		this.blackListOcurrences = new  LinkedList<Integer>();
+		this.checkedListsCount = 0; 
 	}
 	
 	/**
@@ -69,5 +67,9 @@ public class BlackListValidator extends Thread {
 
 	public void setBlackListOcurrences(LinkedList<Integer> blackListOcurrences) {
 		this.blackListOcurrences = blackListOcurrences;
+	}
+
+	public int getCheckedListsCount() {
+		return checkedListsCount;
 	}
 }

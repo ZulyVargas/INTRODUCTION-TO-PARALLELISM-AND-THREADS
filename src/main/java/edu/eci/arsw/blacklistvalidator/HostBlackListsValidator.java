@@ -6,10 +6,15 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.plaf.basic.BasicMenuBarUI;
+import javax.xml.stream.events.StartDocument;
 
 /**
  *
@@ -29,26 +34,61 @@ public class HostBlackListsValidator {
      * @param ipaddress suspicious host's IP address.
      * @return  Blacklists numbers where the given host's IP address was found.
      */
-    public List<Integer> checkHost(String ipaddress){
+    public List<Integer> checkHost(String ipaddress, int numberOfThreads){
         
-        LinkedList<Integer> blackListOcurrences=new LinkedList<>();
+    	LinkedList<Integer> blackListOcurrences=new LinkedList<>();
         
         int ocurrencesCount=0;
         
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
         
+    	//List of threads
+        ArrayList<BlackListValidator> threads = new ArrayList<BlackListValidator>();
+    	
+    	//Entire part, decimal part and residue
+        
+        int entirePart = skds.getRegisteredServersCount()/numberOfThreads;
+        int residue = skds.getRegisteredServersCount()%numberOfThreads;
         int checkedListsCount=0;
         
-        for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
-            checkedListsCount++;
-            
-            if (skds.isInBlackListServer(i, ipaddress)){
-                
-                blackListOcurrences.add(i);
-                
-                ocurrencesCount++;
-            }
+        //Creation of threads with their corresponding arguments
+        int initial_server = 0;
+        int final_server = 0;
+        
+        
+    	
+        for (int n = 0; n < numberOfThreads;n++){	
+        	
+        	if (n == numberOfThreads - 1) {
+        		final_server = initial_server + entirePart + residue - 1 ;
+        	}else final_server = initial_server + entirePart - 1;
+        	
+        	BlackListValidator thread = new BlackListValidator(initial_server, final_server,ipaddress, skds);
+        	threads.add(thread);	
+        	initial_server = final_server + 1;
+        	
+        	thread.start();
+        
         }
+        
+        for (BlackListValidator blv: threads) {
+        	try {
+				blv.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+        }
+
+        
+        int i = 0;
+        for (BlackListValidator blv: threads) {
+        	ocurrencesCount = ocurrencesCount + blv.getOcurrencesCount();
+        	blackListOcurrences.addAll(blv.getBlackListOcurrences());
+        	checkedListsCount = checkedListsCount + blv.getCheckedListsCount();
+        	i++;
+        }
+        
+        
         
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
