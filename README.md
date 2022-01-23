@@ -52,7 +52,7 @@ Para compilar y ejecutar se emplea :
 ![](img/run.png)
 
 
-Al ejecutar el método run() en lugar de start() se ejecutan las iteraciones en orden. COmo se puede observar se muestran primero los números del rango para el primer hilo, luego los del segundo y por último los números en el rango del tercer hilo. Esto sucede ya que al ejecutar run() para cada hilo, estos se ejecutan uno tras o otro secuencialmente, mientras que al usar a start()  este llama al método run() el cual no se ejecuta en un orden en especifico sino que se ejecuta en hilos separados. 
+Al ejecutar el método run() en lugar de start() se ejecutan las iteraciones en orden. Como se puede observar se muestran primero los números del rango para el primer hilo, luego los del segundo y por último los números en el rango del tercer hilo. Esto sucede ya que al ejecutar run() para cada hilo, estos se ejecutan uno tras o otro secuencialmente, mientras que al usar a start()  este llama al método run() el cual no se ejecuta en un orden en especifico sino que se ejecuta en hilos separados. 
 
 
 **Parte II - Ejercicio Black List Search**
@@ -82,6 +82,10 @@ Al programa de prueba provisto (Main), le toma sólo algunos segundos análizar 
 Para 'refactorizar' este código, y hacer que explote la capacidad multi-núcleo de la CPU del equipo, realice lo siguiente:
 
 1. Cree una clase de tipo Thread que represente el ciclo de vida de un hilo que haga la búsqueda de un segmento del conjunto de servidores disponibles. Agregue a dicha clase un método que permita 'preguntarle' a las instancias del mismo (los hilos) cuantas ocurrencias de servidores maliciosos ha encontrado o encontró.
+
+**Creación de la clase BlackListValidator :**
+
+![](img/blackList_thread.png)
 
 2. Agregue al método 'checkHost' un parámetro entero N, correspondiente al número de hilos entre los que se va a realizar la búsqueda (recuerde tener en cuenta si N es par o impar!). Modifique el código de este método para que divida el espacio de búsqueda entre las N partes indicadas, y paralelice la búsqueda a través de N hilos. Haga que dicha función espere hasta que los N hilos terminen de resolver su respectivo sub-problema, agregue las ocurrencias encontradas por cada hilo a la lista que retorna el método, y entonces calcule (sumando el total de ocurrencuas encontradas por cada hilo) si el número de ocurrencias es mayor o igual a _BLACK_LIST_ALARM_COUNT_. Si se da este caso, al final se DEBE reportar el host como confiable o no confiable, y mostrar el listado con los números de las listas negras respectivas. Para lograr este comportamiento de 'espera' revise el método [join](https://docs.oracle.com/javase/tutorial/essential/concurrency/join.html) del API de concurrencia de Java. Tenga también en cuenta:
 
