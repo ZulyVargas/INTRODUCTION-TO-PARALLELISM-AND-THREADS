@@ -151,9 +151,19 @@ Con lo anterior, y con los tiempos de ejecución dados, haga una gráfica de tie
 
 	![](img/ahmdahls.png), donde _S(n)_ es el mejoramiento teórico del desempeño, _P_ la fracción paralelizable del algoritmo, y _n_ el número de hilos, a mayor _n_, mayor debería ser dicha mejora. Por qué el mejor desempeño no se logra con los 500 hilos?, cómo se compara este desempeño cuando se usan 200?. 
 
+	El mejor desempeño no se logra con 500 hilos debido a que, como se puede ver en la gráfica, no se presentará gran diferencia en el tiempo de ejecución si se usa un número menor de hilos, si se compara con 200 hilos podríamos concluir teniendo en cuenta la tendencia que la diferencia en tiempos no representa una mejora significativa. De igual manera si el número de hilos es muy alto se empleará mucho más tiempo en la creación de cada de uno de estos hilos que el tiempo que se empleará en resolver el problema.
+
 2. Cómo se comporta la solución usando tantos hilos de procesamiento como núcleos comparado con el resultado de usar el doble de éste?.
 
+	Al usar 8 hilos de procesamiento se obtuvo un tiempo de solución de 22597 milisegundos, por otro lado al usar el doble de estos, 16 hilos de procesamiento, se empleó un tiempo de 11055 milisegundos, lo que nos permite observar una reducción en el tiempo de aproximadamente el 50%. Por lo tanto, en este caso es preferible usar 16 hilos en lugar de 8.   
+
+
 3. De acuerdo con lo anterior, si para este problema en lugar de 100 hilos en una sola CPU se pudiera usar 1 hilo en cada una de 100 máquinas hipotéticas, la ley de Amdahls se aplicaría mejor?. Si en lugar de esto se usaran c hilos en 100/c máquinas distribuidas (siendo c es el número de núcleos de dichas máquinas), se mejoraría?. Explique su respuesta.
+
+	Para el primer caso al emplear 1 hilo por cada una de las 100 máquinas no se presentaría una mejora debido a que la ley de Amdahls aplica sobre la mejora de desempeño de cada una de las máquinas individualmente, además de esto sería un solo hilo por cada máquina y los procesos serían independientes. 
+	En el segundo caso al usar c hilos en las 100/c máquinas si existiría una mejora tal como se presento en el ejercicio realizado. 
+	
+
 
 
 
